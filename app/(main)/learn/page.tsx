@@ -3,22 +3,34 @@ import StickyWrapper from '@/components/StickyWrapper';
 import React, { use } from 'react'
 import FeedWrapperHeader from './FeedWrapperHeader';
 import UserProgress from '@/components/UserProgress';
-import { getCourseDetails, getUnits, getUserProgress } from '@/db/queries';
+import {
+  getUnits,
+  getUserProgress,
+  getCourseProgress,
+  getLessonPercentage,
+} from '@/db/queries';
 import { redirect } from 'next/navigation';
+import Unit from './Unit';
 
 const LearnPage = async () => {
   const userProgressData = getUserProgress();
   const unitsData = getUnits();
+  const courseProgressData = getCourseProgress();
+  const lessonPercentageData = getLessonPercentage();
 
   const [
     userProgress,
     units,
+    courseProgress,
+    lessonPercentage,
   ] = await Promise.all([
     userProgressData,
     unitsData,
+    courseProgressData,
+    lessonPercentageData,
   ]);
 
-  if (!userProgress || !userProgress.activeCourse) {
+  if (!userProgress || !userProgress.activeCourse || !courseProgress) {
     redirect('/courses');
   };
 
@@ -31,7 +43,15 @@ const LearnPage = async () => {
               key={unit.id}
               className='flex flex-col space-y-4 w-full'
             >
-              {JSON.stringify(unit)}
+              <Unit
+                id={unit.id}
+                title={unit.title}
+                description={unit.description}
+                order={unit.order}
+                lessons={unit.lessons}
+                activeLesson={courseProgress?.activeLesson}
+                activeLessonPercentage={lessonPercentage}
+              />
             </div>
           ))}
         </FeedWrapper>
