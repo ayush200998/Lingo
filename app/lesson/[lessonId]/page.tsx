@@ -1,10 +1,16 @@
 import { getLesson, getUserProgress } from '@/db/queries';
 import { redirect } from 'next/navigation';
 import React from 'react'
-import LessonQuiz from './LessonQuiz';
+import LessonQuiz from '../LessonQuiz';
 
-const LessonsPage = async () => {
-    const lessonData = getLesson();
+const LessonsIdPage = async ({
+    params,
+} : {
+    params: Promise<{ lessonId: string }>
+}) => {
+    const lessonId = parseInt((await params).lessonId);
+
+    const lessonData = getLesson(lessonId);
     const userProgressData = getUserProgress();
 
     const [
@@ -35,4 +41,4 @@ const LessonsPage = async () => {
   )
 }
 
-export default LessonsPage;
+export default LessonsIdPage;
