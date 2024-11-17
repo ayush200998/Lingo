@@ -125,13 +125,13 @@ export const reduceHearts = async (challengeId: number) => {
     const isPractice = !!existingChallengeProgress;
 
     // Update challengeProgress and userProgress data
-    if (isPractice) {
-        return {
-            error: 'practice'
-        }
-    }
+    // if (isPractice) {
+    //     return {
+    //         error: 'practice'
+    //     }
+    // }
 
-    if (currentUserProgress.hearts === 0) {
+    if (currentUserProgress.hearts <= 0) {
         return {
             error: 'hearts',
         }

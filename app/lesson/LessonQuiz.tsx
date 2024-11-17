@@ -2,7 +2,7 @@
 
 import React, { useState, useTransition } from 'react'
 import ReactConfetti from 'react-confetti';
-import { useAudio, useWindowSize } from 'react-use';
+import { useAudio, useWindowSize, useMount } from 'react-use';
 import LessonQuizHeader from './LessonQuizHeader';
 import { challengeOptions, challenges } from '@/db/schema';
 import ChallengeAssistBubble from './ChallengeAssistBubble';
@@ -13,6 +13,8 @@ import { toast } from 'sonner';
 import Image from 'next/image';
 import LessonFinishCard from './LessonFinishCard';
 import { useRouter } from 'next/navigation';
+import { useInsufficientHeartsModal } from '@/store/useInSufficientHeartsModal';
+import { usePracticeModal } from '@/store/usePracticeModal';
 
 type LessonQuizType = {
     initialLessonId: number,
@@ -56,9 +58,14 @@ const LessonQuiz = ({
 
     const [pending, startTransition] = useTransition();
 
+    const handleInsufficientHeartsModalOpen = useInsufficientHeartsModal((state) => state.handleOpen);
+    const handlePracticeModalOpen = usePracticeModal((state) => state.handleOpen);
+
     const [lessonId] = useState(initialLessonId);
     const [hearts, setHearts] = useState(initialHearts);
-    const [percentage, setPercentage] = useState(initialPercentage);
+    const [percentage, setPercentage] = useState(() => {
+        return initialPercentage === 100 ? 0 : initialPercentage;
+    });
     const [challenges] = useState(initialLessonChallenges);
     const [activeChallengeIndex, setActiveChallengeIndex] = useState(() => {
         const activeIndex = challenges.findIndex((challenge) => !challenge.completed);
@@ -67,6 +74,12 @@ const LessonQuiz = ({
     });
     const [currentSelectedOption, setCurrentSelectedOption] = useState<number>();
     const [currentStatus, setCurrentStatus] = useState<'correct' | 'wrong' | 'none'>('none');
+
+    useMount(() => {
+        if (initialPercentage === 100) {
+            handlePracticeModalOpen();
+        }
+    })
 
     const currentActiveChallenge = challenges[activeChallengeIndex];
     const challengeOptions = currentActiveChallenge?.challengeOptions;
@@ -106,7 +119,6 @@ const LessonQuiz = ({
                 upsertChallengeProgress(currentActiveChallenge.id)
                     .then((response) => {
                         if (response?.error === 'hearts') {
-                            // TODO: Add a modal to show unsufficient hearts and upgrade.
                             console.log('Insufficient hearts');
                             return;
                         }
@@ -131,8 +143,7 @@ const LessonQuiz = ({
                 reduceHearts(currentActiveChallenge.id)
                     .then((response) => {
                         if (response?.error === 'hearts') {
-                            // TODO: Add a modal to show unsufficient hearts and upgrade.
-                            console.log('Insufficient hearts');
+                            handleInsufficientHeartsModalOpen();
                             return;
                         }
                         incorrectAudioControls.play();
