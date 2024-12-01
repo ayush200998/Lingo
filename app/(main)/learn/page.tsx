@@ -1,30 +1,38 @@
-import FeedWrapper from '@/components/FeedWrapper';
-import StickyWrapper from '@/components/StickyWrapper';
 import React, { use } from 'react'
+import { redirect } from 'next/navigation';
+
+// Custom Components
+import FeedWrapper from '@/components/FeedWrapper';
 import FeedWrapperHeader from './FeedWrapperHeader';
+import StickyWrapper from '@/components/StickyWrapper';
+import Unit from './Unit';
 import UserProgress from '@/components/UserProgress';
+
+// Db Queries
 import {
   getUnits,
   getUserProgress,
   getCourseProgress,
   getLessonPercentage,
+  getUserSubscription,
 } from '@/db/queries';
-import { redirect } from 'next/navigation';
-import Unit from './Unit';
 
 const LearnPage = async () => {
   const userProgressData = getUserProgress();
   const unitsData = getUnits();
   const courseProgressData = getCourseProgress();
   const lessonPercentageData = getLessonPercentage();
+  const userSubscriptionData = getUserSubscription();
 
   const [
     userProgress,
+    userSubscription,
     units,
     courseProgress,
     lessonPercentage,
   ] = await Promise.all([
     userProgressData,
+    userSubscriptionData,
     unitsData,
     courseProgressData,
     lessonPercentageData,
@@ -33,6 +41,8 @@ const LearnPage = async () => {
   if (!userProgress || !userProgress.activeCourse || !courseProgress) {
     redirect('/courses');
   };
+
+  const isActiveSubscriptionUser = !!userSubscription?.isSubscriptionActive;
 
   return (
     <div className='flex gap-12 px-4 relative top-0'>
@@ -60,7 +70,7 @@ const LearnPage = async () => {
               activeCourse={userProgress?.activeCourse}
               hearts={userProgress?.hearts}
               points={userProgress?.points}
-              hasActiveSubscription={false}
+              hasActiveSubscription={isActiveSubscriptionUser}
             />
         </StickyWrapper>
     </div>

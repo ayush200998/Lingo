@@ -4,7 +4,7 @@ import React, { useState, useTransition } from 'react'
 import ReactConfetti from 'react-confetti';
 import { useAudio, useWindowSize, useMount } from 'react-use';
 import LessonQuizHeader from './LessonQuizHeader';
-import { challengeOptions, challenges } from '@/db/schema';
+import { challengeOptions, challenges, userSubscription } from '@/db/schema';
 import ChallengeAssistBubble from './ChallengeAssistBubble';
 import ChallengeOptionsContainer from './ChallengeOptionsContainer';
 import LessonQuizFooter from './LessonQuizFooter';
@@ -24,7 +24,9 @@ type LessonQuizType = {
         completed: boolean;
         challengeOptions: typeof challengeOptions.$inferSelect[];
     })[],
-    userSubscription: any,
+    userSubscription: (typeof userSubscription.$inferInsert & {
+        isSubscriptionActive: boolean,
+    }) | null,
 };
 
 const LessonQuiz = ({
@@ -61,6 +63,10 @@ const LessonQuiz = ({
     const handleInsufficientHeartsModalOpen = useInsufficientHeartsModal((state) => state.handleOpen);
     const handlePracticeModalOpen = usePracticeModal((state) => state.handleOpen);
 
+    console.log('User Details', {
+        userSubscription,
+        initialHearts,
+    });
     const [lessonId] = useState(initialLessonId);
     const [hearts, setHearts] = useState(initialHearts);
     const [percentage, setPercentage] = useState(() => {
@@ -74,6 +80,8 @@ const LessonQuiz = ({
     });
     const [currentSelectedOption, setCurrentSelectedOption] = useState<number>();
     const [currentStatus, setCurrentStatus] = useState<'correct' | 'wrong' | 'none'>('none');
+
+    const isActiveSubscriptionUser = !!userSubscription?.isSubscriptionActive;
 
     useMount(() => {
         if (initialPercentage === 100) {
@@ -132,7 +140,6 @@ const LessonQuiz = ({
                         }
                     })
                     .catch((error) => {
-                        // TODO: Add a dialog here to show the error
                         toast.error('Something went wrong');
                         console.error(error.message);
                     })
@@ -154,7 +161,6 @@ const LessonQuiz = ({
                         }
                     })
                     .catch((error) => {
-                        // TODO: Add a dialog here to show the error
                         toast.error('Something went wrong');
                         console.error(error.message);
                     })
@@ -233,7 +239,7 @@ const LessonQuiz = ({
         <LessonQuizHeader
             hearts={hearts}
             percentage={percentage}
-            isUserSubscribed={!!userSubscription?.isActive}
+            isUserSubscribed={isActiveSubscriptionUser}
         />
         <div className='flex-1'>
             <div className='h-full flex justify-center items-center'>

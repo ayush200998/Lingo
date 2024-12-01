@@ -68,7 +68,7 @@ const UserProgress = ({
                     width={22}
                     height={22}
                 />
-                {hasActiveSubscription ? <InfinityIcon className='h-4 w-4 stroke-3' /> : hearts}
+                {hasActiveSubscription ? <InfinityIcon className='h-4 w-4 stroke-3 shrink-0' /> : hearts}
             </Button>
         </Link>
     </div>

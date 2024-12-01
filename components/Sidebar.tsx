@@ -5,6 +5,7 @@ import React from 'react'
 import SidebarItem from './SidebarItem'
 import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs'
 import { Loader } from 'lucide-react'
+import ThemeToggle from './theme/ThemeToggle'
 
 type SidebarProps = {
     className?: string,
@@ -76,7 +77,8 @@ const Sidebar = ({ className }: SidebarProps) => {
             </div>
         </div>
 
-        <div id='sidebar-footer' className='flex w-full p-2'>
+        <div id='sidebar-footer' className='flex flex-col gap-6 w-full p-2'>
+            <ThemeToggle />
             <ClerkLoading>
                 <Loader className='h-5 w-5 text-muted-foreground animate-spin' />
             </ClerkLoading>

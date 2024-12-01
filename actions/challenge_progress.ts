@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from "@/db/drizzle";
-import { getUserProgress } from "@/db/queries";
+import { getUserProgress, getUserSubscription } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
@@ -16,6 +16,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     }
 
     const currentUserProgress = await getUserProgress();
+    const userSubscription = await getUserSubscription();
 
     if (!currentUserProgress) {
         throw new Error('User progress not found')
@@ -39,8 +40,13 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
     // isPractice = true, This means that the user has played this challenge earlier and is coming back to the challenge again
     const isPractice = !!existingChallengeProgress;
+    const isActiveSubscriptionUser = !!userSubscription?.isSubscriptionActive;
 
-    if (currentUserProgress.hearts === 0 && !isPractice) {
+    if (
+        currentUserProgress.hearts === 0
+        && !isPractice
+        && !isActiveSubscriptionUser
+    ) {
         return {
             error: 'hearts',
         };
@@ -55,13 +61,15 @@ export const upsertChallengeProgress = async (challengeId: number) => {
             eq(challengeProgress.id, existingChallengeProgress.id),
         );
 
-        await db.update(userProgress).set({
-            hearts: Math.min(currentUserProgress.hearts + 1, 5),
-            points: currentUserProgress.points + 10,
-        })
-        .where(
-            eq(userProgress.userId, userId),
-        );
+        if (!isActiveSubscriptionUser) {
+            await db.update(userProgress).set({
+                hearts: Math.min(currentUserProgress.hearts + 1, 5),
+                points: currentUserProgress.points + 10,
+            })
+            .where(
+                eq(userProgress.userId, userId),
+            );
+        }
 
         revalidatePath('/learn');
         revalidatePath('/lesson');
@@ -100,6 +108,7 @@ export const reduceHearts = async (challengeId: number) => {
     }
 
     const currentUserProgress = await getUserProgress();
+    const userSubscription = await getUserSubscription();
 
     if (!currentUserProgress) {
         throw new Error('User progress not found')
@@ -123,15 +132,20 @@ export const reduceHearts = async (challengeId: number) => {
 
     // isPractice = true, This means that the user has played this challenge earlier and is coming back to the challenge again
     const isPractice = !!existingChallengeProgress;
+    const isActiveSubscriptionUser = !!userSubscription?.isSubscriptionActive;
 
     // Update challengeProgress and userProgress data
-    // if (isPractice) {
-    //     return {
-    //         error: 'practice'
-    //     }
-    // }
+    if (isPractice) {
+        return {
+            error: 'practice'
+        }
+    }
 
-    if (currentUserProgress.hearts <= 0) {
+    if (
+        currentUserProgress.hearts <= 0
+        && !isPractice
+        && !isActiveSubscriptionUser
+    ) {
         return {
             error: 'hearts',
         }
@@ -144,12 +158,14 @@ export const reduceHearts = async (challengeId: number) => {
         completed: true,
     });
 
-    await db.update(userProgress).set({
-        hearts: Math.max(currentUserProgress.hearts - 1, 0),
-    })
-    .where(
-        eq(userProgress.userId, userId),
-    );
+    if (!isActiveSubscriptionUser) {
+        await db.update(userProgress).set({
+            hearts: Math.max(currentUserProgress.hearts - 1, 0),
+        })
+        .where(
+            eq(userProgress.userId, userId),
+        );
+    }
 
     revalidatePath('/learn');
     revalidatePath('/lesson');
