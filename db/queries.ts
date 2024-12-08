@@ -240,3 +240,24 @@ export const getUserSubscription = cache(async () => {
         isSubscriptionActive: !!isSubscriptionActive,
     };
 });
+
+export const getTopTenUsersForLeaderboard = cache(async () => {
+    const { userId } = await auth();
+
+    if (!userId) {
+        return [];
+    }
+
+    const users = await db.query.userProgress.findMany({
+        orderBy: (userProgress, { desc }) => [desc(userProgress.points)],
+        limit: 10,
+        columns: {
+            userId: true,
+            userName: true,
+            userImgSrc: true,
+            points: true,
+        },
+    });
+
+    return users; 
+});

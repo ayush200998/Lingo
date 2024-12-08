@@ -6,14 +6,13 @@ import Image from 'next/image';
 import { toast } from 'sonner';
 import { refillHearts } from '@/actions/user_progress';
 import { createStripeUrl } from '@/actions/user_subscription';
+import { POINTS_TO_REFILL_HEARTS } from '@/constants/constants';
 
 type ShopItemsTypes = {
     hearts: number,
     points: number,
     hasActiveSubscription: boolean,
 };
-
-const POINTS_TO_REFILL_HEARTS = 20;
 
 const ShopItems = ({
     hearts,

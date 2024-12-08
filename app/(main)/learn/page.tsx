@@ -16,6 +16,8 @@ import {
   getLessonPercentage,
   getUserSubscription,
 } from '@/db/queries';
+import UpgradeUserToPro from '@/components/UpgradeUserToPro';
+import Quests from '@/components/Quests';
 
 const LearnPage = async () => {
   const userProgressData = getUserProgress();
@@ -66,12 +68,20 @@ const LearnPage = async () => {
           ))}
         </FeedWrapper>
         <StickyWrapper>
-            <UserProgress 
-              activeCourse={userProgress?.activeCourse}
-              hearts={userProgress?.hearts}
-              points={userProgress?.points}
-              hasActiveSubscription={isActiveSubscriptionUser}
-            />
+          <UserProgress 
+            activeCourse={userProgress?.activeCourse}
+            hearts={userProgress?.hearts}
+            points={userProgress?.points}
+            hasActiveSubscription={isActiveSubscriptionUser}
+          />
+
+          {!isActiveSubscriptionUser && (
+            <UpgradeUserToPro />
+          )}
+
+          <Quests 
+            points={userProgress.points}
+          />
         </StickyWrapper>
     </div>
   )

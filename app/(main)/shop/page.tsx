@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import React from 'react'
 import ShopItems from './ShopItems';
+import Quests from '@/components/Quests';
 
 const ShopPage = async () => {
     const userProgressData = getUserProgress();
@@ -67,6 +68,10 @@ const ShopPage = async () => {
               hearts={userProgress?.hearts}
               points={userProgress?.points}
               hasActiveSubscription={isActiveSubscriptionUser}
+            />
+
+            <Quests
+                points={userProgress.points}
             />
         </StickyWrapper>
     </div>

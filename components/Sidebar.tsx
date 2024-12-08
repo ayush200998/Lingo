@@ -11,30 +11,30 @@ type SidebarProps = {
     className?: string,
 }
 
-const Sidebar = ({ className }: SidebarProps) => {
-    const sidebarItemsArray = [
-        {
-            label: 'Learn',
-            iconSrc: '/icons/learn.svg',
-            href: '/learn'
-        },
-        {
-            label: 'Quests',
-            iconSrc: '/icons/quests.svg',
-            href: '/quests'
-        },
-        {
-            label: 'Leaderboard',
-            iconSrc: '/icons/leaderboard.svg',
-            href: '/leaderboard'
-        },
-        {
-            label: 'Shop',
-            iconSrc: '/icons/shop.svg',
-            href: '/shop'
-        },
-    ];
+const sidebarItemsArray = [
+    {
+        label: 'Learn',
+        iconSrc: '/icons/learn.svg',
+        href: '/learn'
+    },
+    {
+        label: 'Quests',
+        iconSrc: '/icons/quests.svg',
+        href: '/quests'
+    },
+    {
+        label: 'Leaderboard',
+        iconSrc: '/icons/leaderboard.svg',
+        href: '/leaderboard'
+    },
+    {
+        label: 'Shop',
+        iconSrc: '/icons/shop.svg',
+        href: '/shop'
+    },
+];
 
+const Sidebar = ({ className }: SidebarProps) => {
   return (
     <div
         className={cn(
