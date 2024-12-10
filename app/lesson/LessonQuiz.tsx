@@ -63,10 +63,6 @@ const LessonQuiz = ({
     const handleInsufficientHeartsModalOpen = useInsufficientHeartsModal((state) => state.handleOpen);
     const handlePracticeModalOpen = usePracticeModal((state) => state.handleOpen);
 
-    console.log('User Details', {
-        userSubscription,
-        initialHearts,
-    });
     const [lessonId] = useState(initialLessonId);
     const [hearts, setHearts] = useState(initialHearts);
     const [percentage, setPercentage] = useState(() => {

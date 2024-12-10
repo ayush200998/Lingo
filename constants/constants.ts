@@ -26,3 +26,14 @@ export const QUESTS_LIST = [
         value: 5000,
     },
 ];
+
+export const CHALLENGE_SELECT_INPUT = [
+    {
+        id: 'SELECT',
+        name: 'Select'
+    },
+    {
+        id: 'ASSIST',
+        name: 'Assist'
+    },
+];
