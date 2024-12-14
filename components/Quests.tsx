@@ -18,7 +18,7 @@ function Quests({ points } : QuestsProps) {
         <div
             className='flex items-center justify-between'
         >
-            <p className='font-bold text-neutral-800'>
+            <p className='font-bold text-neutral-800 dark:text-neutral-300'>
                 Quests
             </p>
             <Button
@@ -52,7 +52,7 @@ function Quests({ points } : QuestsProps) {
                     className='flex flex-col gap-2 w-full'
                 >
                     <p
-                    className='font-bold text-neutral-700'
+                    className='font-bold text-neutral-700 dark:text-neutral-300/90'
                     >
                     {quest.title}
                     </p>

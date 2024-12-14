@@ -43,13 +43,13 @@ const QuestsPage = async () => {
                   height={80}
                 />
                 <h1
-                  className='text-neutral-800 text-2xl font-bold my-3'
+                  className='text-neutral-800 dark:text-neutral-300 text-2xl font-bold my-3'
                 >
                   Quests
                 </h1>
 
                 <p
-                  className='text-neutral-500 text-base font-semibold mb-3 lg:text-lg'
+                  className='text-neutral-500 dark:text-neutral-400 text-base font-semibold mb-3 lg:text-lg'
                 >
                   Complete quests by earning points.
                 </p>
@@ -76,7 +76,7 @@ const QuestsPage = async () => {
                       className='flex flex-col gap-2 w-full'
                     >
                       <p
-                        className='font-bold text-neutral-700 text-xl'
+                        className='font-bold text-neutral-700 dark:text-neutral-300/90 text-xl'
                       >
                         {quest.title}
                       </p>

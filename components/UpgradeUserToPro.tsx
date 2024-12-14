@@ -22,7 +22,7 @@ function UpgradeUserToPro() {
                     height={24}
                 />
 
-                <p className='font-bold text-neutral-800'>
+                <p className='font-bold text-neutral-800 dark:text-neutral-300'>
                     Upgrade to Pro
                 </p>
             </div>

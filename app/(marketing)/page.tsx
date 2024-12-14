@@ -21,7 +21,7 @@ export default function Home() {
         className='flex flex-col gap-y-6 items-center'
       >
         <h1
-          className='text-xl text-neutral-600 max-w-[480px] lg:text-3xl font-bold text-center'
+          className='text-xl text-neutral-600 max-w-[480px] lg:text-3xl font-bold text-center dark:text-neutral-300'
         >
           Learn, practice and master new languages with Lingo
         </h1>

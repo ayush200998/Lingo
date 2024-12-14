@@ -50,7 +50,7 @@ function ChallengeOptionCard({
     <div
         id={`challenge-card-${text}-${id}`}
         className={cn(
-            'h-full border-2 border-b-4 rounded-xl p-4 lg:p-6 hover:bg-black/5 cursor-pointer active:border-b-2',
+            'h-full border-2 border-b-4 dark:border-sky-300 rounded-xl p-4 lg:p-6 hover:bg-black/5 cursor-pointer active:border-b-2',
             selected && 'border-sky-300 bg-sky-100 hover:bg-sky-100',
             selected && status === 'correct' && 'border-green-300 bg-green-100 hover:bg-green-200',
             selected && status === 'wrong' && 'border-rose-300 bg-rose-100 hover:bg-rose-200',

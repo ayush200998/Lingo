@@ -17,14 +17,14 @@ const SidebarItem = ({ label, iconSrc, href }: SidebarItemProps) => {
     const isActiveButton = pathname === href;
 
   return (
-    <Button
-        size='lg'
-        className='w-full flex justify-start'
-        variant={isActiveButton ? 'sidebarOutline' : 'sidebar'}
+    <Link
+        href={href}
+        className='flex items-center w-full'
     >
-        <Link
-            href={href}
-            className='flex items-center'
+        <Button
+            size='lg'
+            className='w-full flex justify-start'
+            variant={isActiveButton ? 'sidebarOutline' : 'sidebar'}
         >
             <Image
                 src={iconSrc}
@@ -34,8 +34,8 @@ const SidebarItem = ({ label, iconSrc, href }: SidebarItemProps) => {
                 className='mr-3'
             />
             {label}
-        </Link>
-    </Button>
+        </Button>
+    </Link>
   )
 }
 

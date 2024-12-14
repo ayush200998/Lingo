@@ -71,7 +71,7 @@ const ShopItems = ({
                 className='flex-1'
             >
                 <p
-                    className='text-neutral-700 text-base lg:text-xl font-bold'
+                    className='text-neutral-700 dark:text-neutral-300/90 text-base lg:text-xl font-bold'
                 >
                     Refill hearts
                 </p>
@@ -119,7 +119,7 @@ const ShopItems = ({
                 className='flex-1'
             >
                 <p
-                    className='text-neutral-700 text-base lg:text-xl font-bold'
+                    className='text-neutral-700 dark:text-neutral-300/90 text-base lg:text-xl font-bold'
                 >
                     Unlimited hearts
                 </p>

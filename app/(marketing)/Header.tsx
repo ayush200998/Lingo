@@ -10,6 +10,7 @@ import {
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import ThemeToggle from '@/components/theme/ThemeToggle'
 
 const Header = () => {
   const router = useRouter();
@@ -30,20 +31,26 @@ const Header = () => {
             <h1 className='text-xl font-bold text-green-600'>Lingo</h1>
           </div>
 
-          <SignedOut>
-            <Button
-              variant='secondaryOutline'
-            >
-              <SignInButton
-                mode='modal'
-                fallbackRedirectUrl='/learn'
-                signUpFallbackRedirectUrl='/learn'
-              />
-            </Button>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <div
+            className='flex items-center gap-4'
+          >
+            <SignedOut>
+              <Button
+                variant='secondaryOutline'
+              >
+                <SignInButton
+                  mode='modal'
+                  fallbackRedirectUrl='/learn'
+                  signUpFallbackRedirectUrl='/learn'
+                />
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+
+            <ThemeToggle />
+          </div>
         </div>
     </header>
   )

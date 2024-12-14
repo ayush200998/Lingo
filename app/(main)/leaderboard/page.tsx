@@ -48,13 +48,13 @@ const LeaderboardPage = async () => {
                 />
 
                 <h1
-                    className='text-neutral-800 text-2xl font-bold my-3'
+                    className='text-neutral-800 dark:text-neutral-300 text-2xl font-bold my-3'
                 >
                     Leaderboard
                 </h1>
 
                 <p
-                    className='text-neutral-500 text-base font-semibold mb-3 lg:text-lg'
+                    className='text-neutral-500 dark:text-neutral-400 text-base font-semibold mb-3 lg:text-lg'
                 >
                     See where you stand among other learners in the community.
                 </p>
@@ -81,7 +81,7 @@ const LeaderboardPage = async () => {
                   />
                 </Avatar>
                 <p
-                  className='flex-1 font-bold text-neutral-800'
+                  className='flex-1 font-bold text-neutral-800 dark:text-neutral-300'
                 >
                   {leaderboardUser.userName}
                 </p>

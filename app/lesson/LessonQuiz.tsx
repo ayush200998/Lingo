@@ -199,7 +199,7 @@ const LessonQuiz = ({
                         className='lg:hidden block'
                     />
                     <h1
-                        className='text-xl lg:text-3xl font-bold text-neutral-700'
+                        className='text-xl lg:text-3xl font-bold text-neutral-700 dark:text-neutral-300/90'
                     >
                         Great job! <br /> You&apos;ve completed the lesson.
                     </h1>
@@ -243,7 +243,7 @@ const LessonQuiz = ({
                     className='lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12'
                 >
                     <h1
-                        className='text-lg lg:text-3xl text-center font-bold text-neutral-700'
+                        className='text-lg lg:text-3xl text-center font-bold text-neutral-700 dark:text-neutral-300'
                     >
                         {title}
                     </h1>
