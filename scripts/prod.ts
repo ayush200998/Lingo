@@ -257,7 +257,7 @@ const main = async () => {
                   challengeId: challenge.id,
                   correct: true,
                   text: "el robot",
-                  imageSrc: "/assets/robot.svg",
+                  imageSrc: "/assets/robot.png",
                   audioSrc: "/audio/es_robot.mp3",
                 },
                 {
@@ -283,7 +283,7 @@ const main = async () => {
                   challengeId: challenge.id,
                   correct: true,
                   text: "la nina",
-                  imageSrc: "/assets/girl.svg",
+                  imageSrc: "/assets/girl.png",
                   audioSrc: "/audio/es_girl.mp3",
                 },
                 {
